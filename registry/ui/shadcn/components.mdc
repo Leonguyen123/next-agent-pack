@@ -1,0 +1,83 @@
+---
+description: shadcn/ui conventions, Radix primitives, Lucide icons, cva variant definitions, and component composition
+globs: components/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# shadcn/ui Component Architecture Guidelines
+
+Follow these rules when building or modifying UI with shadcn/ui:
+
+## 1. Directory Structure & Layering
+Keep clean separation between primitives and composite components:
+```text
+components/
+├── ui/                     # Base shadcn primitives (Button, Dialog, Input, etc.)
+│   ├── button.tsx
+│   ├── dialog.tsx
+│   └── input.tsx
+├── shared/                 # Reusable domain-agnostic widgets (ThemeToggle, EmptyState)
+└── features/               # Feature-specific components (UserProfileCard, OrderTable)
+```
+
+- Treat `components/ui/*` as foundational primitives generated or managed by `shadcn`. Avoid mixing domain business logic directly inside `components/ui/`.
+- Build feature components by composing these foundational primitives.
+
+## 2. Variant Definitions with `cva`
+Use `class-variance-authority` (cva) for defining typed visual variants:
+
+```tsx
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+const badgeVariants = cva(
+  'inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
+        outline: 'text-foreground',
+      },
+      size: {
+        sm: 'text-[10px] px-2 py-0.25',
+        default: 'text-xs px-2.5 py-0.5',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  }
+);
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+export function Badge({ className, variant, size, ...props }: BadgeProps) {
+  return <div className={cn(badgeVariants({ variant, size }), className)} {...props} />;
+}
+```
+
+## 3. Polymorphic Elements with `asChild` (Radix Slot)
+Support slot composition with `Slot` from `@radix-ui/react-slot` whenever components need to render as a custom tag (like Next.js `Link`):
+
+```tsx
+import { Slot } from '@radix-ui/react-slot';
+
+export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
+
+export function ActionButton({ asChild = false, ...props }: ActionButtonProps) {
+  const Comp = asChild ? Slot : 'button';
+  return <Comp {...props} />;
+}
+```
+
+## 4. Icons
+- Standardize on `lucide-react` for all UI icons.
+- Pass explicit `size` or Tailwind class `className="size-4"` or `className="size-5"` to maintain consistent proportions.

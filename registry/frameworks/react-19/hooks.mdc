@@ -1,0 +1,105 @@
+---
+description: React 19 conventions, form state with useActionState, useOptimistic, and use() hook
+globs: components/**/*.{ts,tsx}, app/**/*.{ts,tsx}, hooks/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# React 19 Modern Patterns & Hooks
+
+Follow these rules for React 19 code:
+
+## 1. Form State Management (`useActionState`)
+Replace deprecated `useFormState` from `react-dom` with React 19's `useActionState`:
+
+```tsx
+'use client';
+
+import { useActionState } from 'react';
+import { updateProfile } from '@/actions/profile';
+
+const initialState = { message: '', status: 'idle' as const };
+
+export function ProfileForm() {
+  const [state, formAction, isPending] = useActionState(updateProfile, initialState);
+
+  return (
+    <form action={formAction}>
+      <input name="username" disabled={isPending} />
+      <button type="submit" disabled={isPending}>
+        {isPending ? 'Saving...' : 'Save'}
+      </button>
+      {state.message && <p>{state.message}</p>}
+    </form>
+  );
+}
+```
+
+## 2. Optimistic UI Updates (`useOptimistic`)
+Use `useOptimistic` to show immediate visual feedback before asynchronous mutations complete:
+
+```tsx
+'use client';
+
+import { useOptimistic } from 'react';
+
+export function CommentList({ comments, onAddComment }: CommentListProps) {
+  const [optimisticComments, addOptimisticComment] = useOptimistic(
+    comments,
+    (state, newComment: string) => [...state, { id: 'temp-id', text: newComment, pending: true }]
+  );
+
+  async function handleSubmit(formData: FormData) {
+    const text = formData.get('comment') as string;
+    addOptimisticComment(text);
+    await onAddComment(text);
+  }
+
+  return (
+    <div>
+      {optimisticComments.map((c) => (
+        <div key={c.id} className={c.pending ? 'opacity-50' : ''}>
+          {c.text}
+        </div>
+      ))}
+      <form action={handleSubmit}>
+        <input name="comment" required />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+}
+```
+
+## 3. Passing Refs as Props
+In React 19, `ref` can be passed directly as a standard component prop. Do not wrap function components in `forwardRef` unless maintaining backward compatibility for React 18 consumers:
+
+```tsx
+// React 19 standard:
+interface CustomInputProps extends React.ComponentProps<'input'> {
+  label: string;
+  ref?: React.Ref<HTMLInputElement>;
+}
+
+export function CustomInput({ label, ref, ...props }: CustomInputProps) {
+  return (
+    <label>
+      {label}
+      <input ref={ref} {...props} />
+    </label>
+  );
+}
+```
+
+## 4. Reading Promises with `use()`
+Use `use()` to read Promises in Client Components suspended with React Suspense:
+
+```tsx
+'use client';
+
+import { use, Suspense } from 'react';
+
+function UserProfile({ userPromise }: { userPromise: Promise<UserData> }) {
+  const user = use(userPromise);
+  return <div>{user.name}</div>;
+}
+```

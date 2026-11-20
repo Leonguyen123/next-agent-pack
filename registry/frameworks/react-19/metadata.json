@@ -1,0 +1,9 @@
+{
+  "id": "react-19",
+  "name": "React 19 Modern Patterns",
+  "category": "frameworks",
+  "description": "Rules for React 19 conventions including useActionState, useOptimistic, use() hook, and clean ref usage.",
+  "files": [
+    "hooks.mdc"
+  ]
+}

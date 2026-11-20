@@ -1,0 +1,53 @@
+---
+description: Tailwind CSS rules, className merging with cn(), class ordering, and design token usage
+globs: components/**/*.{ts,tsx}, app/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Tailwind CSS Standards & Best Practices
+
+Follow these rules when writing styles and layout with Tailwind CSS:
+
+## 1. Class Name Merging (`cn` helper)
+Always use the `cn()` utility (`clsx` + `tailwind-merge`) when conditionally joining class names or accepting an optional `className` prop:
+
+```tsx
+import { cn } from '@/lib/utils';
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'muted';
+}
+
+export function Card({ className, variant = 'default', ...props }: CardProps) {
+  return (
+    <div
+      className={cn(
+        'rounded-xl border bg-card p-6 text-card-foreground shadow-sm transition-colors',
+        variant === 'muted' && 'bg-muted/50 border-muted',
+        className
+      )}
+      {...props}
+    />
+  );
+}
+```
+
+Never do string concatenation like `className={`base-class ${isActive ? 'active' : ''}`}` without merging.
+
+## 2. Logical Class Ordering
+Keep class lists orderly and readable following this structure:
+1. **Layout & Display:** `flex`, `grid`, `hidden`, `block`, `relative`, `absolute`, `z-*`
+2. **Box Model & Sizing:** `w-*`, `h-*`, `max-w-*`, `p-*`, `m-*`
+3. **Typography:** `text-*`, `font-*`, `leading-*`, `tracking-*`
+4. **Visuals & Decor:** `bg-*`, `border-*`, `rounded-*`, `shadow-*`, `opacity-*`
+5. **Interactive & States:** `hover:*`, `focus:*`, `focus-visible:*`, `active:*`, `disabled:*`
+6. **Dark Mode & Responsive:** `dark:*`, `sm:*`, `md:*`, `lg:*`
+
+## 3. Theming & Semantic Colors
+- Use CSS variable tokens rather than raw colors (e.g., use `bg-background`, `text-foreground`, `border-border`, `bg-primary` instead of `bg-white`, `text-black`, `border-gray-200`).
+- This guarantees clean support for light mode, dark mode, and dynamic custom themes.
+
+## 4. Responsive Design (Mobile-First)
+- Always write mobile styles first as base classes.
+- Layer on responsive breakpoints progressively: `sm:`, `md:`, `lg:`, `xl:`.
+- Avoid arbitrary desktop-first overrides.

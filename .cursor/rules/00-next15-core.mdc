@@ -1,0 +1,52 @@
+---
+description: Next.js 15 App Router architecture, async request APIs, server actions, and caching defaults
+globs: app/**/*.{ts,tsx}, components/**/*.{ts,tsx}, actions/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Next.js 15 App Router Core Standards
+
+You are an expert Next.js 15 fullstack engineer. Follow these rules for all Next.js 15 App Router code:
+
+## 1. Async Request APIs (Breaking in Next.js 15)
+In Next.js 15, runtime request values (`params`, `searchParams`, `cookies`, `headers`) are asynchronous and must be awaited:
+
+```tsx
+// Correct (Next.js 15):
+interface PageProps {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function Page({ params, searchParams }: PageProps) {
+  const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
+  return <div>Item: {slug}</div>;
+}
+```
+
+Never access `params.slug` synchronously in page or layout props.
+
+## 2. Server Components vs Client Components
+- Keep components as **Server Components (RSC)** by default.
+- Place `'use client'` only at the top of leaf components that need browser APIs, event handlers (`onClick`, `onChange`), or React hooks (`useState`, `useEffect`).
+- Never import server-only code (DB queries, secret env vars) into Client Components. Use the `server-only` package if necessary.
+
+## 3. Server Actions & Mutations
+- Mark Server Actions with `'use server'` at the function or module level.
+- Always validate input arguments using a schema validator (such as Zod).
+- Return typed results: `{ success: true, data: T }` or `{ success: false, error: string }`.
+- Revalidate paths with `revalidatePath` or tags with `revalidateTag` after data mutations.
+
+## 4. Caching & Fetch Defaults
+- In Next.js 15, `fetch` requests and `GET` Route Handlers are **uncached by default** (`cache: 'no-store'`).
+- Explicitly configure caching when needed:
+  ```ts
+  // For static or cached content:
+  fetch(url, { next: { revalidate: 3600 } });
+  ```
+- Use `use cache` directive when opting into the experimental cache semantics if enabled.
+
+## 5. Metadata & SEO
+- Define static metadata with `export const metadata: Metadata = { ... }`.
+- Define dynamic metadata with `export async function generateMetadata({ params }): Promise<Metadata>`. Await `params` properly.

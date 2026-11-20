@@ -1,0 +1,9 @@
+{
+  "id": "tailwind",
+  "name": "Tailwind CSS Standards",
+  "category": "ui",
+  "description": "Rules for utility-first styling, class ordering, cn() helper, responsive design, and CSS variables theming.",
+  "files": [
+    "styling.mdc"
+  ]
+}

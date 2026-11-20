@@ -1,0 +1,9 @@
+{
+  "id": "shadcn",
+  "name": "shadcn/ui Component Architecture",
+  "category": "ui",
+  "description": "Rules for composing and extending shadcn/ui components, Radix primitives, Lucide icons, and cva variants.",
+  "files": [
+    "components.mdc"
+  ]
+}

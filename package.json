@@ -1,0 +1,23 @@
+{
+  "name": "next-agent-pack",
+  "version": "0.1.0",
+  "description": "The composable rule pack and engineering standards for AI Coding Agents in Next.js 15 and React 19.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/validate.mjs"
+  },
+  "keywords": [
+    "nextjs",
+    "react19",
+    "tailwind",
+    "shadcn",
+    "ai-agent",
+    "cursor-rules",
+    "claude-code",
+    "antigravity"
+  ],
+  "author": "next-agent-pack contributors",
+  "license": "MIT"
+}

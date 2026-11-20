@@ -1,0 +1,9 @@
+{
+  "id": "nextjs-15",
+  "name": "Next.js 15 App Router Core",
+  "category": "frameworks",
+  "description": "Essential architectural rules, async request APIs (params, searchParams), caching semantics, and server action guidelines for Next.js 15.",
+  "files": [
+    "core.mdc"
+  ]
+}

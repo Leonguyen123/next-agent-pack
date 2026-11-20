@@ -1,0 +1,17 @@
+{
+  "id": "next15-shadcn-minimal",
+  "name": "Next.js 15 + React 19 + Tailwind + shadcn/ui Minimal Stack",
+  "description": "Essential bundle for building modern Next.js 15 apps with React 19 and shadcn/ui.",
+  "modules": [
+    "frameworks/nextjs-15",
+    "frameworks/react-19",
+    "ui/tailwind",
+    "ui/shadcn"
+  ],
+  "distMapping": {
+    "frameworks/nextjs-15/core.mdc": "00-next15-core.mdc",
+    "frameworks/react-19/hooks.mdc": "01-react19-modern.mdc",
+    "ui/tailwind/styling.mdc": "02-tailwind-styling.mdc",
+    "ui/shadcn/components.mdc": "03-shadcn-components.mdc"
+  }
+}
