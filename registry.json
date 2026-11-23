@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "next-agent-pack",
-  "homepage": "https://github.com/thangnguyenhoang/next-agent-pack",
+  "homepage": "https://github.com/Leonguyen123/next-agent-pack",
   "items": [
     {
       "name": "rules",
