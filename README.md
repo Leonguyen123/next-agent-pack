@@ -1,143 +1,178 @@
 # 🚀 next-agent-pack
 
-> **The composable rule pack and engineering standards for AI Coding Agents (Cursor & Antigravity) in Next.js 15 and React 19.**
+> **The composable rule pack and engineering standards for AI Coding Agents (Cursor & Antigravity) in Next.js 15 and React 19.**  
+> *Distributed via the official [shadcn GitHub Registry](https://ui.shadcn.com/docs/registry/github) specification and zero-config curl installer.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.x-black?logo=nextdotjs)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Components-black)](https://ui.shadcn.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Registry-black)](https://ui.shadcn.com/docs/registry/github)
 
 ---
 
-## ⚡ The Problem
-Next.js 15 and React 19 introduced groundbreaking paradigms:
-- **Async Request APIs**: `params` and `searchParams` are now asynchronous Promises.
-- **Changed Caching Semantics**: `fetch` requests are no longer cached by default (`no-store` default).
-- **React 19 Modern Hooks**: `useActionState` replaces deprecated `useFormState`, native `ref` props replace `forwardRef`, and `useOptimistic` powers optimistic UI.
+## ⚡ The Problem: AI Hallucinations in Next.js 15 & React 19
 
-Without dedicated rules, AI Coding Agents (Cursor, Antigravity, Claude, Copilot) often hallucinate outdated Next.js 13/14 or React 18 patterns, causing silent runtime failures and broken builds.
+Next.js 15 and React 19 introduced massive paradigm shifts:
+- **Async Request APIs**: `params` and `searchParams` are now asynchronous Promises (calling `props.params.slug` synchronously crashes at runtime).
+- **Uncached Fetch Defaults**: `fetch` requests and Route Handlers are no longer cached by default (`cache: 'no-store'`).
+- **React 19 Modern Hooks**: `useActionState` replaces deprecated `useFormState`, native `ref` props replace `forwardRef`, and `useOptimistic` powers instant UI feedback.
 
-**`next-agent-pack`** provides clean, token-optimized, battle-tested system rules so your AI assistant writes production-ready Next.js 15 code from day one.
+Without strict system rules, AI Coding Assistants (Cursor, Antigravity, Claude, Copilot) frequently hallucinate outdated patterns from Next.js 13/14 or React 18, generating broken code.
+
+**`next-agent-pack`** injects clean, token-optimized engineering rules so your AI assistant writes production-ready Next.js 15 code from your very first prompt.
 
 ---
 
-## 📦 Installation
+## 📦 Quick Installation
 
-You can install `next-agent-pack` using either the **official shadcn CLI** or a quick **1-line curl script**:
+You can install `next-agent-pack` using either the **official shadcn CLI** or a **1-line curl script**:
 
 ### Method 1: Using shadcn CLI (Official GitHub Registry)
 
-If you are already in a Next.js project configured with shadcn, run:
+If your Next.js project is configured with `shadcn`, install directly with zero setup:
 
 ```bash
-# Install the full pack (AGENTS.md + Cursor rules)
+# 1. Install Full Pack (Antigravity AGENTS.md + 4 Cursor .mdc rules):
 npx shadcn@latest add egitech/next-agent-pack/rules
 
-# Or install only Antigravity AGENTS.md:
+# 2. Or install only Antigravity AGENTS.md:
 npx shadcn@latest add egitech/next-agent-pack/agents-md
 
-# Or install only Cursor .mdc rules:
+# 3. Or install only Cursor .mdc rules:
 npx shadcn@latest add egitech/next-agent-pack/cursor-rules
 ```
 
-### Method 2: Using 1-Line Curl Script
+### Method 2: Using 1-Line Curl Script (Universal)
 
-Run inside your project root:
+Works on any project without needing the `shadcn` CLI installed:
 
 ```bash
-# Install everything (Cursor .mdc rules + Antigravity AGENTS.md & Skill):
+# Install everything (Cursor rules + Antigravity AGENTS.md & Skill):
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash
 
-# Or install specifically for Cursor:
+# Or install specifically for Cursor (.cursor/rules/*.mdc):
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s cursor
 
-# Or install specifically for Antigravity:
+# Or install specifically for Antigravity (AGENTS.md & Skill):
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s antigravity
 ```
 
 ---
 
-## 🤖 Multi-Agent Support
+## 💡 How It Works: The 2-File GitHub Registry Principle
 
-`next-agent-pack` supports multiple AI Coding Assistants out of the box:
+According to the official [shadcn GitHub Registry specification](https://ui.shadcn.com/docs/registry/github), any public GitHub repository can serve as a decentralized code and rules registry with **just 2 essential components**:
 
-| AI Agent | Target File(s) | Trigger Mechanism |
-| :--- | :--- | :--- |
-| **Cursor AI** | `.cursor/rules/*.mdc` | Automatic activation based on `globs` matching active editor files. |
-| **Antigravity (Rules)** | `AGENTS.md` | Hierarchical context injection for the entire project. |
-| **Antigravity (Skill)** | `.agents/skills/next-agent-pack/SKILL.md` | **Progressive Disclosure**: Antigravity automatically reads detailed skill rules when tasked with Next.js/React work. |
+1. **`registry.json` (The Catalog Index)**: Sits at the root of the repository, declaring available items, file sources (`path`), and user destinations (`target`).
+2. **The Source Files**: The raw markdown or code files distributed to consumers.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Dev as Developer
+    participant CLI as shadcn CLI
+    participant GH as GitHub Registry (egitech/next-agent-pack)
+    participant Workspace as Your Project Workspace
+
+    Dev->>CLI: npx shadcn add egitech/next-agent-pack/rules
+    CLI->>GH: Reads root registry.json
+    GH-->>CLI: Returns items & target file mappings
+    CLI->>GH: Fetches AGENTS.md & .mdc rules
+    CLI->>Workspace: Writes ~/AGENTS.md
+    CLI->>Workspace: Writes ~/.cursor/rules/00-next15-core.mdc...
+    CLI-->>Dev: Done! AI is now equipped with Next.js 15 standards.
+```
 
 ---
 
-## 🧩 Included Rules
+## 🤖 Multi-Agent Compatibility
 
-| Rule File | Target Domain | Core Focus |
+`next-agent-pack` unifies the top AI coding tools into a single source of truth:
+
+| AI Coding Agent | Configuration File | Loading Mechanism |
 | :--- | :--- | :--- |
-| **`00-next15-core.mdc`** | Framework Core | `await params`, App Router layouts, Server Components by default, Server Actions with validation, and Next.js 15 un-cached `fetch` defaults. |
-| **`01-react19-modern.mdc`** | Modern React | `useActionState`, optimistic updates via `useOptimistic`, `use()` hook for promises, and clean ref-as-prop usage. |
-| **`02-tailwind-styling.mdc`** | Styling & Theme | `cn()` helper with `tailwind-merge`, logical class ordering, design tokens (`bg-background`, `text-foreground`), and mobile-first responsiveness. |
-| **`03-shadcn-components.mdc`** | UI Architecture | Clean separation between `components/ui` primitives and feature composite widgets, `cva` variant definitions, and polymorphic `asChild` composition. |
+| **Cursor AI** | `.cursor/rules/*.mdc` | **Context Scoping**: Auto-activates based on `globs` matching files currently open in the editor. |
+| **Google Antigravity (Rules)** | `AGENTS.md` | **Hierarchical Context**: Project-wide engineering instructions loaded at session startup. |
+| **Google Antigravity (Skill)** | `.agents/skills/next-agent-pack/SKILL.md` | **Progressive Disclosure**: Detailed guidelines read on-demand only when tackling relevant tasks. |
 
 ---
 
-## 🏗️ Architecture: Composable Registry
+## 🧩 Included Rules Overview
 
-`next-agent-pack` is designed as a **Lego-like Registry**, making it easy to maintain and extend:
+| Rule File | Domain | Core Guidelines Enforced |
+| :--- | :--- | :--- |
+| **`00-next15-core.mdc`** | Next.js 15 Core | Mandatory `await params` / `await searchParams`, Server Components by default, validated Server Actions (`'use server'`), and Next.js 15 un-cached `fetch` defaults (`no-store`). |
+| **`01-react19-modern.mdc`** | React 19 Hooks | Form mutations with `useActionState` (deprecates `useFormState`), optimistic UI with `useOptimistic`, Suspense promise streaming with `use()`, and direct `ref` props (no `forwardRef`). |
+| **`02-tailwind-styling.mdc`** | Tailwind CSS | Strict class merging with `cn()` utility (`clsx` + `tailwind-merge`), logical class ordering, semantic CSS variable tokens (`bg-background`, `text-primary`), and mobile-first responsiveness. |
+| **`03-shadcn-components.mdc`** | shadcn/ui Arch | Clean directory separation between `components/ui/*` primitives and composite feature components, `cva` variant definitions, and polymorphic `asChild` composition via Radix Slot. |
+
+---
+
+## 🏗️ Composable Architecture (Lego Registry)
+
+`next-agent-pack` separates raw modular rules from assembled distributions:
 
 ```text
 next-agent-pack/
-├── registry/                           # Atomic modular rule blocks
+├── registry.json                       # Official shadcn GitHub Registry index
+│
+├── registry/                           # Atomic modular source blocks
 │   ├── frameworks/
 │   │   ├── nextjs-15/                  # Next.js 15 core rules & metadata
 │   │   └── react-19/                   # React 19 hooks & patterns
 │   └── ui/
-│       ├── tailwind/                   # Utility-first styling & theme rules
-│       └── shadcn/                     # Primitives & component composition
+│       ├── tailwind/                   # Tailwind styling & tokens
+│       └── shadcn/                     # shadcn/ui component architecture
 │
-├── stacks/                             # Pre-assembled presets
+├── stacks/                             # Presets assembling atomic blocks
 │   └── next15-shadcn-minimal/          # Manifest linking registry modules
 │
-├── dist/                               # Ready-to-use compiled bundles
+├── dist/                               # Pre-compiled bundles ready for distribution
 │   └── next15-shadcn/
-│       ├── 00-next15-core.mdc          # Cursor rules
+│       ├── 00-next15-core.mdc
 │       ├── ...
 │       ├── AGENTS.md                   # Antigravity project rules
 │       └── skills/next-agent-pack/     # Antigravity progressive skill
 │
 ├── scripts/
-│   ├── build.mjs                       # Bundler compiling dist packages & multi-agent outputs
-│   └── validate.mjs                    # Linter verifying frontmatter & token budgets
+│   ├── build.mjs                       # Bundler compiling dist/ and root assets
+│   └── validate.mjs                    # Linter verifying frontmatter, token limits, and registry.json
 │
-└── install.sh                          # 1-command installer script (supports all, cursor, antigravity)
+├── install.sh                          # 1-line installer script
+└── AGENTS.md                           # Self-hosting rules for developing this repository
 ```
 
 ---
 
-## 🛡️ Upgradability & Custom Rules (Namespacing)
+## 🛡️ Upgradability & Safe Customization (Namespacing)
 
-To safely update `next-agent-pack` in the future without losing your company or personal project rules, follow this namespacing convention:
+To safely update `next-agent-pack` in your repository without overwriting custom company or personal rules:
 
-- **`0x-*.mdc`**: **System Rules** managed by `next-agent-pack` (safe to update/re-run installer).
-- **`9x-*.mdc`**: **Your Custom Team Rules** (e.g. `90-company-guidelines.mdc`). The installer will **never** touch or overwrite `9x-*.mdc` files.
-
----
-
-## 🗺️ Roadmap
-
-- [x] **Phase 1: Composable Registry** — Next.js 15 + React 19 + Tailwind + shadcn preset with 1-line curl installer.
-- [x] **Phase 2: Multi-Agent Adapter** — Automated compilation for Cursor (`.mdc`) and Antigravity (`AGENTS.md` + Progressive `SKILL.md`).
-- [ ] **Phase 3: Interactive CLI** — `npx next-agent-pack init` with interactive selector for ORMs (Drizzle, Prisma), auth, and editors.
+- **`0x-*.mdc`**: **System Rules** managed by `next-agent-pack` (safe to re-run installer/update).
+- **`9x-*.mdc`**: **Your Custom Team Rules** (e.g. `90-company-guidelines.mdc`). The installer and registry will **never** overwrite `9x-*.mdc` files.
 
 ---
 
-## 🤝 Contributing
+## 🛠️ Development & Contributing
 
-Contributions are welcome! If you find edge-cases or new conventions:
-1. Fork the repo & create a branch.
-2. Edit or add modules under `registry/`.
-3. Run `npm run build && npm run validate`.
-4. Submit a Pull Request.
+### Prerequisites
+- Node.js >= 18
+
+### Commands
+```bash
+# Compile dist bundles, AGENTS.md, and local .cursor rules:
+npm run build
+
+# Validate frontmatter, token limits (< 1500 words/rule), and registry.json integrity:
+npm test
+```
+
+### Contributing Workflow
+1. Fork the repo and create your branch (`git checkout -b feat/add-drizzle-rule`).
+2. Add or update rules in `registry/`.
+3. Run `npm run build && npm test`.
+4. Commit your changes and submit a Pull Request!
 
 ---
 
