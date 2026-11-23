@@ -1,4 +1,4 @@
-# 🚀 next-agent-pack
+# next-agent-pack
 
 > **The composable rule pack and engineering standards for AI Coding Agents (Cursor & Antigravity) in Next.js 15 and React 19.**  
 > *Distributed via the official [shadcn GitHub Registry](https://ui.shadcn.com/docs/registry/github) specification and zero-config curl installer.*
@@ -11,7 +11,7 @@
 
 ---
 
-## ⚡ The Problem: AI Hallucinations in Next.js 15 & React 19
+## The Problem: AI Hallucinations in Next.js 15 & React 19
 
 Next.js 15 and React 19 introduced massive paradigm shifts:
 - **Async Request APIs**: `params` and `searchParams` are now asynchronous Promises (calling `props.params.slug` synchronously crashes at runtime).
@@ -24,7 +24,7 @@ Without strict system rules, AI Coding Assistants (Cursor, Antigravity, Claude, 
 
 ---
 
-## 📦 Quick Installation
+## Quick Installation
 
 You can install `next-agent-pack` using either the **official shadcn CLI** or a **1-line curl script**:
 
@@ -60,7 +60,7 @@ curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/instal
 
 ---
 
-## 💡 How It Works: The 2-File GitHub Registry Principle
+## How It Works: The 2-File GitHub Registry Principle
 
 According to the official [shadcn GitHub Registry specification](https://ui.shadcn.com/docs/registry/github), any public GitHub repository can serve as a decentralized code and rules registry with **just 2 essential components**:
 
@@ -86,7 +86,7 @@ sequenceDiagram
 
 ---
 
-## 🤖 Multi-Agent Compatibility
+## Multi-Agent Compatibility
 
 `next-agent-pack` unifies the top AI coding tools into a single source of truth:
 
@@ -98,7 +98,7 @@ sequenceDiagram
 
 ---
 
-## 🧩 Included Rules Overview
+## Included Rules Overview
 
 | Rule File | Domain | Core Guidelines Enforced |
 | :--- | :--- | :--- |
@@ -109,7 +109,7 @@ sequenceDiagram
 
 ---
 
-## 🏗️ Composable Architecture (Lego Registry)
+## Composable Architecture (Lego Registry)
 
 `next-agent-pack` separates raw modular rules from assembled distributions:
 
@@ -145,7 +145,7 @@ next-agent-pack/
 
 ---
 
-## 🛡️ Upgradability & Safe Customization (Namespacing)
+## Upgradability & Safe Customization (Namespacing)
 
 To safely update `next-agent-pack` in your repository without overwriting custom company or personal rules:
 
@@ -154,7 +154,7 @@ To safely update `next-agent-pack` in your repository without overwriting custom
 
 ---
 
-## 🛠️ Development & Contributing
+## Development & Contributing
 
 ### Prerequisites
 - Node.js >= 18
@@ -176,6 +176,6 @@ npm test
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the MIT License.
