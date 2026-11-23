@@ -22,7 +22,26 @@ Without dedicated rules, AI Coding Agents (Cursor, Antigravity, Claude, Copilot)
 
 ---
 
-## 📦 1-Line Quick Installation
+## 📦 Installation
+
+You can install `next-agent-pack` using either the **official shadcn CLI** or a quick **1-line curl script**:
+
+### Method 1: Using shadcn CLI (Official GitHub Registry)
+
+If you are already in a Next.js project configured with shadcn, run:
+
+```bash
+# Install the full pack (AGENTS.md + Cursor rules)
+npx shadcn@latest add egitech/next-agent-pack/rules
+
+# Or install only Antigravity AGENTS.md:
+npx shadcn@latest add egitech/next-agent-pack/agents-md
+
+# Or install only Cursor .mdc rules:
+npx shadcn@latest add egitech/next-agent-pack/cursor-rules
+```
+
+### Method 2: Using 1-Line Curl Script
 
 Run inside your project root:
 

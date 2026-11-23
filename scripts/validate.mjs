@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const registryDir = path.join(rootDir, 'registry');
+const rootRegistryJson = path.join(rootDir, 'registry.json');
 
 function getAllFiles(dir, ext = '.mdc') {
   let results = [];
@@ -65,9 +66,45 @@ for (const filePath of ruleFiles) {
   }
 }
 
+// Validate shadcn registry.json
+console.log('\n🔍 Validating root registry.json (shadcn GitHub Registry spec)...');
+if (!fs.existsSync(rootRegistryJson)) {
+  console.error('❌ Missing root registry.json');
+  hasErrors = true;
+} else {
+  try {
+    const regData = JSON.parse(fs.readFileSync(rootRegistryJson, 'utf8'));
+    if (!regData.$schema || !regData.name || !Array.isArray(regData.items)) {
+      console.error('❌ registry.json missing $schema, name, or items array');
+      hasErrors = true;
+    } else {
+      console.log(`✓ registry.json schema and name valid: "${regData.name}" (${regData.items.length} items)`);
+      for (const item of regData.items) {
+        if (!item.name || !item.files) {
+          console.error(`❌ Registry item missing name or files`);
+          hasErrors = true;
+        } else {
+          for (const f of item.files) {
+            const resolvedPath = path.join(rootDir, f.path);
+            if (!fs.existsSync(resolvedPath)) {
+              console.error(`❌ Registry item "${item.name}" references non-existent file: ${f.path}`);
+              hasErrors = true;
+            } else {
+              console.log(`  ✓ Item [${item.name}] file verified: ${f.path} -> ${f.target || 'default'}`);
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error(`❌ registry.json is not valid JSON: ${err.message}`);
+    hasErrors = true;
+  }
+}
+
 if (hasErrors) {
   console.error('\n❌ Validation failed with errors.');
   process.exit(1);
 } else {
-  console.log('\n✨ All rules passed validation!');
+  console.log('\n✨ All rules and registry.json passed validation!');
 }

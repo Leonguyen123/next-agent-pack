@@ -1,0 +1,81 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "next-agent-pack",
+  "homepage": "https://github.com/egitech/next-agent-pack",
+  "items": [
+    {
+      "name": "rules",
+      "type": "registry:item",
+      "title": "Next.js 15 & React 19 Full Agent Pack",
+      "description": "Production-ready rules for Cursor and Antigravity covering Next.js 15, React 19, Tailwind CSS, and shadcn/ui.",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        },
+        {
+          "path": "dist/next15-shadcn/00-next15-core.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/00-next15-core.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/01-react19-modern.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/01-react19-modern.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/02-tailwind-styling.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/02-tailwind-styling.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/03-shadcn-components.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/03-shadcn-components.mdc"
+        }
+      ]
+    },
+    {
+      "name": "agents-md",
+      "type": "registry:item",
+      "title": "Antigravity AGENTS.md Rules",
+      "description": "Unified rules file for Google Antigravity and Gemini Code Assist.",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        }
+      ]
+    },
+    {
+      "name": "cursor-rules",
+      "type": "registry:item",
+      "title": "Cursor .mdc Rules Pack",
+      "description": "Modular .mdc rules for Cursor IDE matching Next.js 15, React 19, Tailwind, and shadcn/ui.",
+      "files": [
+        {
+          "path": "dist/next15-shadcn/00-next15-core.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/00-next15-core.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/01-react19-modern.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/01-react19-modern.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/02-tailwind-styling.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/02-tailwind-styling.mdc"
+        },
+        {
+          "path": "dist/next15-shadcn/03-shadcn-components.mdc",
+          "type": "registry:file",
+          "target": "~/.cursor/rules/03-shadcn-components.mdc"
+        }
+      ]
+    }
+  ]
+}
