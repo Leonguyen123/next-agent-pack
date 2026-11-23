@@ -4,7 +4,7 @@ set -e
 # next-agent-pack installer
 # Cross-agent rules for Cursor, Antigravity, and Claude Code
 
-REPO_RAW_URL="https://raw.githubusercontent.com/egitech/next-agent-pack/main"
+REPO_RAW_URL="https://raw.githubusercontent.com/thangnguyenhoang/next-agent-pack/main"
 MODE="${1:-all}" # Options: cursor, antigravity, claude, all
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo "")"

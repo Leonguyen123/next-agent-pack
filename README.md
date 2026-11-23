@@ -34,16 +34,16 @@ If your Next.js project is configured with `shadcn`, install directly with zero 
 
 ```bash
 # 1. Install Full Pack (Cursor rules + Antigravity AGENTS.md + Claude CLAUDE.md):
-npx shadcn@latest add egitech/next-agent-pack/rules
+npx shadcn@latest add thangnguyenhoang/next-agent-pack/rules
 
 # 2. Or install specifically for Claude Code:
-npx shadcn@latest add egitech/next-agent-pack/claude-md
+npx shadcn@latest add thangnguyenhoang/next-agent-pack/claude-md
 
 # 3. Or install specifically for Antigravity:
-npx shadcn@latest add egitech/next-agent-pack/agents-md
+npx shadcn@latest add thangnguyenhoang/next-agent-pack/agents-md
 
 # 4. Or install specifically for Cursor:
-npx shadcn@latest add egitech/next-agent-pack/cursor-rules
+npx shadcn@latest add thangnguyenhoang/next-agent-pack/cursor-rules
 ```
 
 ### Method 2: Using 1-Line Curl Script (Universal)
@@ -52,16 +52,16 @@ Works on any project without needing the `shadcn` CLI installed:
 
 ```bash
 # Install everything (Cursor + Antigravity + Claude):
-curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/thangnguyenhoang/next-agent-pack/main/install.sh | bash
 
 # Or install specifically for Claude Code:
-curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s claude
+curl -fsSL https://raw.githubusercontent.com/thangnguyenhoang/next-agent-pack/main/install.sh | bash -s claude
 
 # Or install specifically for Cursor:
-curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s cursor
+curl -fsSL https://raw.githubusercontent.com/thangnguyenhoang/next-agent-pack/main/install.sh | bash -s cursor
 
 # Or install specifically for Antigravity:
-curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s antigravity
+curl -fsSL https://raw.githubusercontent.com/thangnguyenhoang/next-agent-pack/main/install.sh | bash -s antigravity
 ```
 
 ---
@@ -78,10 +78,10 @@ sequenceDiagram
     autonumber
     actor Dev as Developer
     participant CLI as shadcn CLI
-    participant GH as GitHub Registry (egitech/next-agent-pack)
+    participant GH as GitHub Registry (thangnguyenhoang/next-agent-pack)
     participant Workspace as Your Project Workspace
 
-    Dev->>CLI: npx shadcn add egitech/next-agent-pack/rules
+    Dev->>CLI: npx shadcn add thangnguyenhoang/next-agent-pack/rules
     CLI->>GH: Reads root registry.json
     GH-->>CLI: Returns items & target file mappings
     CLI->>GH: Fetches AGENTS.md, CLAUDE.md & .mdc rules
