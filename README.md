@@ -1,6 +1,6 @@
 # 🚀 next-agent-pack
 
-> **The composable rule pack and engineering standards for AI Coding Agents in Next.js 15 and React 19.**
+> **The composable rule pack and engineering standards for AI Coding Agents (Cursor & Antigravity) in Next.js 15 and React 19.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.x-black?logo=nextdotjs)](https://nextjs.org/)
@@ -16,7 +16,7 @@ Next.js 15 and React 19 introduced groundbreaking paradigms:
 - **Changed Caching Semantics**: `fetch` requests are no longer cached by default (`no-store` default).
 - **React 19 Modern Hooks**: `useActionState` replaces deprecated `useFormState`, native `ref` props replace `forwardRef`, and `useOptimistic` powers optimistic UI.
 
-Without dedicated rules, AI Coding Agents (Cursor, Claude, Copilot, Antigravity) often hallucinate outdated Next.js 13/14 or React 18 patterns, causing silent runtime failures and broken builds.
+Without dedicated rules, AI Coding Agents (Cursor, Antigravity, Claude, Copilot) often hallucinate outdated Next.js 13/14 or React 18 patterns, causing silent runtime failures and broken builds.
 
 **`next-agent-pack`** provides clean, token-optimized, battle-tested system rules so your AI assistant writes production-ready Next.js 15 code from day one.
 
@@ -24,13 +24,30 @@ Without dedicated rules, AI Coding Agents (Cursor, Claude, Copilot, Antigravity)
 
 ## 📦 1-Line Quick Installation
 
-Run this inside your project root to instantly install the preset rules into `.cursor/rules/`:
+Run inside your project root:
 
 ```bash
+# Install everything (Cursor .mdc rules + Antigravity AGENTS.md & Skill):
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash
+
+# Or install specifically for Cursor:
+curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s cursor
+
+# Or install specifically for Antigravity:
+curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s antigravity
 ```
 
-Or copy the files directly from the [`dist/next15-shadcn/`](./dist/next15-shadcn) directory.
+---
+
+## 🤖 Multi-Agent Support
+
+`next-agent-pack` supports multiple AI Coding Assistants out of the box:
+
+| AI Agent | Target File(s) | Trigger Mechanism |
+| :--- | :--- | :--- |
+| **Cursor AI** | `.cursor/rules/*.mdc` | Automatic activation based on `globs` matching active editor files. |
+| **Antigravity (Rules)** | `AGENTS.md` | Hierarchical context injection for the entire project. |
+| **Antigravity (Skill)** | `.agents/skills/next-agent-pack/SKILL.md` | **Progressive Disclosure**: Antigravity automatically reads detailed skill rules when tasked with Next.js/React work. |
 
 ---
 
@@ -63,13 +80,17 @@ next-agent-pack/
 │   └── next15-shadcn-minimal/          # Manifest linking registry modules
 │
 ├── dist/                               # Ready-to-use compiled bundles
-│   └── next15-shadcn/                  # Standard distribution for users
+│   └── next15-shadcn/
+│       ├── 00-next15-core.mdc          # Cursor rules
+│       ├── ...
+│       ├── AGENTS.md                   # Antigravity project rules
+│       └── skills/next-agent-pack/     # Antigravity progressive skill
 │
 ├── scripts/
-│   ├── build.mjs                       # Bundler script for dist packages
+│   ├── build.mjs                       # Bundler compiling dist packages & multi-agent outputs
 │   └── validate.mjs                    # Linter verifying frontmatter & token budgets
 │
-└── install.sh                          # 1-command installer script
+└── install.sh                          # 1-command installer script (supports all, cursor, antigravity)
 ```
 
 ---
@@ -85,8 +106,8 @@ To safely update `next-agent-pack` in the future without losing your company or 
 
 ## 🗺️ Roadmap
 
-- [x] **Phase 1: Static Registry** — Production-ready Next.js 15 + React 19 + Tailwind + shadcn preset with 1-line curl installer.
-- [ ] **Phase 2: Multi-Agent Adapter** — Automated builder to compile registry rules into `CLAUDE.md`, `AGENTS.md`, and `.github/copilot-instructions.md`.
+- [x] **Phase 1: Composable Registry** — Next.js 15 + React 19 + Tailwind + shadcn preset with 1-line curl installer.
+- [x] **Phase 2: Multi-Agent Adapter** — Automated compilation for Cursor (`.mdc`) and Antigravity (`AGENTS.md` + Progressive `SKILL.md`).
 - [ ] **Phase 3: Interactive CLI** — `npx next-agent-pack init` with interactive selector for ORMs (Drizzle, Prisma), auth, and editors.
 
 ---
