@@ -1,6 +1,6 @@
 # next-agent-pack
 
-> **The composable rule pack and engineering standards for AI Coding Agents (Cursor & Antigravity) in Next.js 15 and React 19.**  
+> **The composable rule pack and engineering standards for AI Coding Agents (Cursor, Antigravity & Claude Code) in Next.js 15 and React 19.**  
 > *Distributed via the official [shadcn GitHub Registry](https://ui.shadcn.com/docs/registry/github) specification and zero-config curl installer.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -18,7 +18,7 @@ Next.js 15 and React 19 introduced massive paradigm shifts:
 - **Uncached Fetch Defaults**: `fetch` requests and Route Handlers are no longer cached by default (`cache: 'no-store'`).
 - **React 19 Modern Hooks**: `useActionState` replaces deprecated `useFormState`, native `ref` props replace `forwardRef`, and `useOptimistic` powers instant UI feedback.
 
-Without strict system rules, AI Coding Assistants (Cursor, Antigravity, Claude, Copilot) frequently hallucinate outdated patterns from Next.js 13/14 or React 18, generating broken code.
+Without strict system rules, AI Coding Assistants (Cursor, Antigravity, Claude Code, Copilot) frequently hallucinate outdated patterns from Next.js 13/14 or React 18, generating broken code.
 
 **`next-agent-pack`** injects clean, token-optimized engineering rules so your AI assistant writes production-ready Next.js 15 code from your very first prompt.
 
@@ -33,13 +33,16 @@ You can install `next-agent-pack` using either the **official shadcn CLI** or a 
 If your Next.js project is configured with `shadcn`, install directly with zero setup:
 
 ```bash
-# 1. Install Full Pack (Antigravity AGENTS.md + 4 Cursor .mdc rules):
+# 1. Install Full Pack (Cursor rules + Antigravity AGENTS.md + Claude CLAUDE.md):
 npx shadcn@latest add egitech/next-agent-pack/rules
 
-# 2. Or install only Antigravity AGENTS.md:
+# 2. Or install specifically for Claude Code:
+npx shadcn@latest add egitech/next-agent-pack/claude-md
+
+# 3. Or install specifically for Antigravity:
 npx shadcn@latest add egitech/next-agent-pack/agents-md
 
-# 3. Or install only Cursor .mdc rules:
+# 4. Or install specifically for Cursor:
 npx shadcn@latest add egitech/next-agent-pack/cursor-rules
 ```
 
@@ -48,13 +51,16 @@ npx shadcn@latest add egitech/next-agent-pack/cursor-rules
 Works on any project without needing the `shadcn` CLI installed:
 
 ```bash
-# Install everything (Cursor rules + Antigravity AGENTS.md & Skill):
+# Install everything (Cursor + Antigravity + Claude):
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash
 
-# Or install specifically for Cursor (.cursor/rules/*.mdc):
+# Or install specifically for Claude Code:
+curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s claude
+
+# Or install specifically for Cursor:
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s cursor
 
-# Or install specifically for Antigravity (AGENTS.md & Skill):
+# Or install specifically for Antigravity:
 curl -fsSL https://raw.githubusercontent.com/egitech/next-agent-pack/main/install.sh | bash -s antigravity
 ```
 
@@ -78,8 +84,8 @@ sequenceDiagram
     Dev->>CLI: npx shadcn add egitech/next-agent-pack/rules
     CLI->>GH: Reads root registry.json
     GH-->>CLI: Returns items & target file mappings
-    CLI->>GH: Fetches AGENTS.md & .mdc rules
-    CLI->>Workspace: Writes ~/AGENTS.md
+    CLI->>GH: Fetches AGENTS.md, CLAUDE.md & .mdc rules
+    CLI->>Workspace: Writes ~/AGENTS.md & ~/CLAUDE.md
     CLI->>Workspace: Writes ~/.cursor/rules/00-next15-core.mdc...
     CLI-->>Dev: Done! AI is now equipped with Next.js 15 standards.
 ```
@@ -88,13 +94,14 @@ sequenceDiagram
 
 ## Multi-Agent Compatibility
 
-`next-agent-pack` unifies the top AI coding tools into a single source of truth:
+`next-agent-pack` unifies the top 3 AI coding assistants into a single source of truth:
 
 | AI Coding Agent | Configuration File | Loading Mechanism |
 | :--- | :--- | :--- |
 | **Cursor AI** | `.cursor/rules/*.mdc` | **Context Scoping**: Auto-activates based on `globs` matching files currently open in the editor. |
 | **Google Antigravity (Rules)** | `AGENTS.md` | **Hierarchical Context**: Project-wide engineering instructions loaded at session startup. |
 | **Google Antigravity (Skill)** | `.agents/skills/next-agent-pack/SKILL.md` | **Progressive Disclosure**: Detailed guidelines read on-demand only when tackling relevant tasks. |
+| **Anthropic Claude Code** | `CLAUDE.md` | **Project Memory**: Global project architecture and development commands loaded into agent context. |
 
 ---
 
@@ -133,6 +140,7 @@ next-agent-pack/
 │       ├── 00-next15-core.mdc
 │       ├── ...
 │       ├── AGENTS.md                   # Antigravity project rules
+│       ├── CLAUDE.md                   # Claude Code project instructions
 │       └── skills/next-agent-pack/     # Antigravity progressive skill
 │
 ├── scripts/
@@ -140,7 +148,8 @@ next-agent-pack/
 │   └── validate.mjs                    # Linter verifying frontmatter, token limits, and registry.json
 │
 ├── install.sh                          # 1-line installer script
-└── AGENTS.md                           # Self-hosting rules for developing this repository
+├── AGENTS.md                           # Self-hosting rules for Antigravity
+└── CLAUDE.md                           # Self-hosting rules for Claude Code
 ```
 
 ---
@@ -161,7 +170,7 @@ To safely update `next-agent-pack` in your repository without overwriting custom
 
 ### Commands
 ```bash
-# Compile dist bundles, AGENTS.md, and local .cursor rules:
+# Compile dist bundles, AGENTS.md, CLAUDE.md, and local .cursor rules:
 npm run build
 
 # Validate frontmatter, token limits (< 1500 words/rule), and registry.json integrity:

@@ -2,10 +2,10 @@
 set -e
 
 # next-agent-pack installer
-# Cross-agent rules for Cursor, Antigravity, and AI Coding Assistants
+# Cross-agent rules for Cursor, Antigravity, and Claude Code
 
 REPO_RAW_URL="https://raw.githubusercontent.com/egitech/next-agent-pack/main"
-MODE="${1:-all}" # Options: cursor, antigravity, all
+MODE="${1:-all}" # Options: cursor, antigravity, claude, all
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo "")"
 LOCAL_DIST="${SCRIPT_DIR}/dist/next15-shadcn"
@@ -57,6 +57,17 @@ install_antigravity() {
   fi
 }
 
+install_claude() {
+  echo "⚡ [Claude Code] Installing CLAUDE.md..."
+  if [ -d "$LOCAL_DIST" ] && [ -f "$LOCAL_DIST/CLAUDE.md" ]; then
+    cp "$LOCAL_DIST/CLAUDE.md" "./CLAUDE.md"
+    echo "  ✓ Installed CLAUDE.md (Project Memory)"
+  else
+    curl -fsSL "${REPO_RAW_URL}/dist/next15-shadcn/CLAUDE.md" -o "./CLAUDE.md"
+    echo "  ✓ Downloaded CLAUDE.md"
+  fi
+}
+
 echo "📦 next-agent-pack Installation (Mode: ${MODE})"
 echo "------------------------------------------------"
 
@@ -67,12 +78,16 @@ case "$MODE" in
   antigravity)
     install_antigravity
     ;;
+  claude)
+    install_claude
+    ;;
   all)
     install_cursor
     install_antigravity
+    install_claude
     ;;
   *)
-    echo "Unknown mode: $MODE (choose: cursor, antigravity, all)"
+    echo "Unknown mode: $MODE (choose: cursor, antigravity, claude, all)"
     exit 1
     ;;
 esac

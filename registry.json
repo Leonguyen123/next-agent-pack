@@ -6,13 +6,18 @@
     {
       "name": "rules",
       "type": "registry:item",
-      "title": "Next.js 15 & React 19 Full Agent Pack",
-      "description": "Production-ready rules for Cursor and Antigravity covering Next.js 15, React 19, Tailwind CSS, and shadcn/ui.",
+      "title": "Universal AI Agent Rules Pack (Next.js 15 & React 19)",
+      "description": "Production-ready rules for Cursor, Antigravity, and Claude Code covering Next.js 15, React 19, Tailwind CSS, and shadcn/ui.",
       "files": [
         {
           "path": "AGENTS.md",
           "type": "registry:file",
           "target": "~/AGENTS.md"
+        },
+        {
+          "path": "CLAUDE.md",
+          "type": "registry:file",
+          "target": "~/CLAUDE.md"
         },
         {
           "path": "dist/next15-shadcn/00-next15-core.mdc",
@@ -33,6 +38,19 @@
           "path": "dist/next15-shadcn/03-shadcn-components.mdc",
           "type": "registry:file",
           "target": "~/.cursor/rules/03-shadcn-components.mdc"
+        }
+      ]
+    },
+    {
+      "name": "claude-md",
+      "type": "registry:item",
+      "title": "Claude Code CLAUDE.md Rules",
+      "description": "Project instructions and architecture rules for Anthropic Claude Code CLI.",
+      "files": [
+        {
+          "path": "CLAUDE.md",
+          "type": "registry:file",
+          "target": "~/CLAUDE.md"
         }
       ]
     },

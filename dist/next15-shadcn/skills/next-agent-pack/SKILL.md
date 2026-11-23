@@ -5,11 +5,11 @@ description: Best practices and rules for Next.js 15 App Router, React 19 hooks 
 
 # Next.js 15 & React 19 Engineering Skill Pack
 
-# Next.js 15 App Router Core Standards
+## Next.js 15 App Router Core Standards
 
 You are an expert Next.js 15 fullstack engineer. Follow these rules for all Next.js 15 App Router code:
 
-## 1. Async Request APIs (Breaking in Next.js 15)
+### 1. Async Request APIs (Breaking in Next.js 15)
 In Next.js 15, runtime request values (`params`, `searchParams`, `cookies`, `headers`) are asynchronous and must be awaited:
 
 ```tsx
@@ -28,18 +28,18 @@ export default async function Page({ params, searchParams }: PageProps) {
 
 Never access `params.slug` synchronously in page or layout props.
 
-## 2. Server Components vs Client Components
+### 2. Server Components vs Client Components
 - Keep components as **Server Components (RSC)** by default.
 - Place `'use client'` only at the top of leaf components that need browser APIs, event handlers (`onClick`, `onChange`), or React hooks (`useState`, `useEffect`).
 - Never import server-only code (DB queries, secret env vars) into Client Components. Use the `server-only` package if necessary.
 
-## 3. Server Actions & Mutations
+### 3. Server Actions & Mutations
 - Mark Server Actions with `'use server'` at the function or module level.
 - Always validate input arguments using a schema validator (such as Zod).
 - Return typed results: `{ success: true, data: T }` or `{ success: false, error: string }`.
 - Revalidate paths with `revalidatePath` or tags with `revalidateTag` after data mutations.
 
-## 4. Caching & Fetch Defaults
+### 4. Caching & Fetch Defaults
 - In Next.js 15, `fetch` requests and `GET` Route Handlers are **uncached by default** (`cache: 'no-store'`).
 - Explicitly configure caching when needed:
   ```ts
@@ -48,17 +48,17 @@ Never access `params.slug` synchronously in page or layout props.
   ```
 - Use `use cache` directive when opting into the experimental cache semantics if enabled.
 
-## 5. Metadata & SEO
+### 5. Metadata & SEO
 - Define static metadata with `export const metadata: Metadata = { ... }`.
 - Define dynamic metadata with `export async function generateMetadata({ params }): Promise<Metadata>`. Await `params` properly.
 
 ---
 
-# React 19 Modern Patterns & Hooks
+## React 19 Modern Patterns & Hooks
 
 Follow these rules for React 19 code:
 
-## 1. Form State Management (`useActionState`)
+### 1. Form State Management (`useActionState`)
 Replace deprecated `useFormState` from `react-dom` with React 19's `useActionState`:
 
 ```tsx
@@ -84,7 +84,7 @@ export function ProfileForm() {
 }
 ```
 
-## 2. Optimistic UI Updates (`useOptimistic`)
+### 2. Optimistic UI Updates (`useOptimistic`)
 Use `useOptimistic` to show immediate visual feedback before asynchronous mutations complete:
 
 ```tsx
@@ -120,7 +120,7 @@ export function CommentList({ comments, onAddComment }: CommentListProps) {
 }
 ```
 
-## 3. Passing Refs as Props
+### 3. Passing Refs as Props
 In React 19, `ref` can be passed directly as a standard component prop. Do not wrap function components in `forwardRef` unless maintaining backward compatibility for React 18 consumers:
 
 ```tsx
@@ -140,7 +140,7 @@ export function CustomInput({ label, ref, ...props }: CustomInputProps) {
 }
 ```
 
-## 4. Reading Promises with `use()`
+### 4. Reading Promises with `use()`
 Use `use()` to read Promises in Client Components suspended with React Suspense:
 
 ```tsx
@@ -156,11 +156,11 @@ function UserProfile({ userPromise }: { userPromise: Promise<UserData> }) {
 
 ---
 
-# Tailwind CSS Standards & Best Practices
+## Tailwind CSS Standards & Best Practices
 
 Follow these rules when writing styles and layout with Tailwind CSS:
 
-## 1. Class Name Merging (`cn` helper)
+### 1. Class Name Merging (`cn` helper)
 Always use the `cn()` utility (`clsx` + `tailwind-merge`) when conditionally joining class names or accepting an optional `className` prop:
 
 ```tsx
@@ -186,7 +186,7 @@ export function Card({ className, variant = 'default', ...props }: CardProps) {
 
 Never do string concatenation like `className={`base-class ${isActive ? 'active' : ''}`}` without merging.
 
-## 2. Logical Class Ordering
+### 2. Logical Class Ordering
 Keep class lists orderly and readable following this structure:
 1. **Layout & Display:** `flex`, `grid`, `hidden`, `block`, `relative`, `absolute`, `z-*`
 2. **Box Model & Sizing:** `w-*`, `h-*`, `max-w-*`, `p-*`, `m-*`
@@ -195,22 +195,22 @@ Keep class lists orderly and readable following this structure:
 5. **Interactive & States:** `hover:*`, `focus:*`, `focus-visible:*`, `active:*`, `disabled:*`
 6. **Dark Mode & Responsive:** `dark:*`, `sm:*`, `md:*`, `lg:*`
 
-## 3. Theming & Semantic Colors
+### 3. Theming & Semantic Colors
 - Use CSS variable tokens rather than raw colors (e.g., use `bg-background`, `text-foreground`, `border-border`, `bg-primary` instead of `bg-white`, `text-black`, `border-gray-200`).
 - This guarantees clean support for light mode, dark mode, and dynamic custom themes.
 
-## 4. Responsive Design (Mobile-First)
+### 4. Responsive Design (Mobile-First)
 - Always write mobile styles first as base classes.
 - Layer on responsive breakpoints progressively: `sm:`, `md:`, `lg:`, `xl:`.
 - Avoid arbitrary desktop-first overrides.
 
 ---
 
-# shadcn/ui Component Architecture Guidelines
+## shadcn/ui Component Architecture Guidelines
 
 Follow these rules when building or modifying UI with shadcn/ui:
 
-## 1. Directory Structure & Layering
+### 1. Directory Structure & Layering
 Keep clean separation between primitives and composite components:
 ```text
 components/
@@ -225,7 +225,7 @@ components/
 - Treat `components/ui/*` as foundational primitives generated or managed by `shadcn`. Avoid mixing domain business logic directly inside `components/ui/`.
 - Build feature components by composing these foundational primitives.
 
-## 2. Variant Definitions with `cva`
+### 2. Variant Definitions with `cva`
 Use `class-variance-authority` (cva) for defining typed visual variants:
 
 ```tsx
@@ -264,7 +264,7 @@ export function Badge({ className, variant, size, ...props }: BadgeProps) {
 }
 ```
 
-## 3. Polymorphic Elements with `asChild` (Radix Slot)
+### 3. Polymorphic Elements with `asChild` (Radix Slot)
 Support slot composition with `Slot` from `@radix-ui/react-slot` whenever components need to render as a custom tag (like Next.js `Link`):
 
 ```tsx
@@ -280,6 +280,6 @@ export function ActionButton({ asChild = false, ...props }: ActionButtonProps) {
 }
 ```
 
-## 4. Icons
+### 4. Icons
 - Standardize on `lucide-react` for all UI icons.
 - Pass explicit `size` or Tailwind class `className="size-4"` or `className="size-5"` to maintain consistent proportions.
